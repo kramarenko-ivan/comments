@@ -1,0 +1,75 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+dist/
+build/
+.tmp/
+.cache/
+
+# Frontend
+*.gz
+*.zip
+*.tar
+*.tgz
+coverage/
+
+# IDE and editor settings
+.vscode/
+.idea/
+.idea/*
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docker
+docker-compose.override.yml
+*.pid
+*.seed
+*.log
+
+# Database
+*.sqlite
+*.db
+*.sql
+/migrations/*.js
+/migrations/*.ts
+
+# Test artifacts
+/coverage
+/.nyc_output
+/jest-results.json
+
+# Docs / media
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.mkv
+*.webm
+*.flv
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Optional: ignore ER-diagram binaries if generated
+*.mwb

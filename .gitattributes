@@ -1,0 +1,22 @@
+# Ensure consistent line endings
+* text=auto eol=lf
+
+# Treat certain files as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.mp4 binary
+*.mov binary
+*.avi binary
+
+# Merge strategies
+*.lock merge=union
+package-lock.json merge=union
+yarn.lock merge=union
+pnpm-lock.yaml merge=union
+
+# Keep SQL and migrations as text
+*.sql text
+*.ts text
+*.js text
