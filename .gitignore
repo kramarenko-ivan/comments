@@ -71,5 +71,4 @@ docker-compose.override.yml
 *.jpeg
 *.gif
 
-# Optional: ignore ER-diagram binaries if generated
-*.mwb
+db/
