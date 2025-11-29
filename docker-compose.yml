@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   db:
     image: mysql:8
@@ -11,13 +9,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./db:/var/lib/mysql
-
-  frontend:
-    build: ./frontend
-    container_name: react_app
-    ports:
-      - "5173:5173"
+      - db_data:/var/lib/mysql
 
   backend:
     build: ./backend
@@ -26,9 +18,24 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_PORT=3306
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=secret
-      - DATABASE_NAME=comments_db
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm run dev  # или start:prod, если нужно
+
+  frontend:
+    build: ./frontend
+    container_name: react_app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm run dev
+
+volumes:
+  db_data:
