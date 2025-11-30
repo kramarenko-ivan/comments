@@ -1,9 +1,27 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Users } from './users/users.entity';
+import { UsersModule } from './users/users.module';
+import { Comments } from './comments/comments.entity';
+import { Files } from './files/files.entity';
 
 @Module({
-  imports: [],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'db',
+      port: 3306,
+      username: 'root',
+      password: 'secret',
+      database: 'comments_db',
+      entities: [Users, Comments, Files],
+      synchronize: true, // ⚠️ never turn at prod
+    }),
+    TypeOrmModule.forFeature([Users, Comments, Files]),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
