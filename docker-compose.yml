@@ -20,9 +20,8 @@ services:
       - db
     volumes:
       - ./backend:/app
-      - /app/node_modules
     working_dir: /app
-    command: npm run dev  # или start:prod, если нужно
+    command: npm run start:dev  # или start:prod, если нужно
 
   frontend:
     build: ./frontend
@@ -33,7 +32,6 @@ services:
       - backend
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     working_dir: /app
     command: npm run dev
 
