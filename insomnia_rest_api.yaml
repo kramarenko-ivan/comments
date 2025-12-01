@@ -1,0 +1,437 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Comments Project
+meta:
+  id: wrk_ab4a487b704f404f940c48d9713e5a73
+  created: 1764585286720
+  modified: 1764590754008
+  description: ""
+collection:
+  - name: Users
+    meta:
+      id: fld_9916678b71c04f89b9da09a7cd4ab016
+      created: 1764590177748
+      modified: 1764590283676
+      sortKey: -1764590177748
+      description: ""
+    children:
+      - url: http://localhost:3000/users
+        name: Create User
+        meta:
+          id: req_2cf10571e71a49d8831c1ac9c70a44e6
+          created: 1764585286721
+          modified: 1764590274767
+          isPrivate: false
+          description: ""
+          sortKey: -1764590274731
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "username": "ivan",
+              "email": "ivan@example.com",
+              "homepage": "https://ivan.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/users
+        name: Get All Users
+        meta:
+          id: req_45a42a9277e448cc854e7dfcce58de62
+          created: 1764585286722
+          modified: 1764590284337
+          isPrivate: false
+          description: ""
+          sortKey: -1764590274631
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/users/7
+        name: Get User by ID
+        meta:
+          id: req_1c8578223cb0441f8075bf56dedd67f3
+          created: 1764585286723
+          modified: 1764590331604
+          isPrivate: false
+          description: ""
+          sortKey: -1764590275031
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/users/6
+        name: Delete User
+        meta:
+          id: req_8983e082735b4cc29db0a6dfd2cdca02
+          created: 1764585286725
+          modified: 1764590309431
+          isPrivate: false
+          description: ""
+          sortKey: -1764590274931
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:3000/users/6
+        name: Update User
+        meta:
+          id: req_792b6a91335a4729994d88d957895310
+          created: 1764589951073
+          modified: 1764590292448
+          isPrivate: false
+          description: ""
+          sortKey: -1764590274831
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "username": "ivan_keke",
+              "email": "ivan_new@keke.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Comments
+    meta:
+      id: fld_1910137227f949a8be48194d21d69f74
+      created: 1764590787696
+      modified: 1764590787696
+      sortKey: -1764590787696
+      description: ""
+    children:
+      - url: http://localhost:3000/comments
+        name: Get All Comments
+        meta:
+          id: req_58e0d20ca975494292be7281b72989dd
+          created: 1764585286727
+          modified: 1764590965117
+          isPrivate: false
+          description: ""
+          sortKey: -1764590823777
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/comments/12
+        name: Delete Comment
+        meta:
+          id: req_698a8edee2b843febec2440e545df9ce
+          created: 1764585286730
+          modified: 1764592258993
+          isPrivate: false
+          description: ""
+          sortKey: -1764590823377
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/comments
+        name: Create Root Comment
+        meta:
+          id: req_fc71770184a54b42a8ac6ecef2d19717
+          created: 1764590818577
+          modified: 1764590892984
+          isPrivate: false
+          description: ""
+          sortKey: -1764590823577
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "userId": 7,
+              "text": "Это корневой комментарий",
+              "parentId": null
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/comments
+        name: Create Reply Comment
+        meta:
+          id: req_dda8dbf70f5a4379a2abe885bfe2ae28
+          created: 1764590896874
+          modified: 1764590938164
+          isPrivate: false
+          description: ""
+          sortKey: -1764590823677
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "userId": 7,
+              "text": "Это ответ на комментарий",
+              "parentId": 11
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/comments/11/tree
+        name: Get Comment by ID
+        meta:
+          id: req_44c5a478c1de43de9d86a61bc9c2154f
+          created: 1764590978567
+          modified: 1764591201666
+          isPrivate: false
+          description: ""
+          sortKey: -1764590823877
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/comments/12
+        name: Update Comment (partically)
+        meta:
+          id: req_8af0fe0867f24e9b81c62a9773389da7
+          created: 1764591531296
+          modified: 1764591630770
+          isPrivate: false
+          description: ""
+          sortKey: -1764590823477
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "text": "Обновлённый текст дочернего комментария"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Files
+    meta:
+      id: fld_65267837a2f04a77bd047d9cc2f7a0fc
+      created: 1764592270151
+      modified: 1764592404204
+      sortKey: -1764592270151
+      description: ""
+    children:
+      - url: http://localhost:3000/files
+        name: Get All Files
+        meta:
+          id: req_7c8c69f4dc784ede96b8156612bca753
+          created: 1764585286732
+          modified: 1764592397479
+          isPrivate: false
+          description: ""
+          sortKey: -1764592318097
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/files/1
+        name: Get File by ID
+        meta:
+          id: req_cf29161aa557446d89f99c471228c2e6
+          created: 1764585286733
+          modified: 1764592399200
+          isPrivate: false
+          description: ""
+          sortKey: -1764592318197
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/files/1
+        name: Delete File
+        meta:
+          id: req_a74b8327965c490d9b0ba5ce39192629
+          created: 1764585286734
+          modified: 1764592470429
+          isPrivate: false
+          description: ""
+          sortKey: -1764592317797
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/files
+        name: Create File
+        meta:
+          id: req_26c346a1490b48468ac07200e79e5e0c
+          created: 1764592293626
+          modified: 1764592409143
+          isPrivate: false
+          description: ""
+          sortKey: -1764592317997
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "commentId": 13,
+              "file_type": "image",
+              "file_path": "/uploads/photo.jpg",
+              "size": 1024
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/files/1
+        name: Update File
+        meta:
+          id: req_e1e608de74d64099a4684c280009b4f7
+          created: 1764592414141
+          modified: 1764592444514
+          isPrivate: false
+          description: ""
+          sortKey: -1764592317897
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "file_path": "/uploads/photo2.jpg",
+              "size": 2048
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_6ecdeea3aecae89c612725e246831562f38609d0
+    created: 1764585286738
+    modified: 1764585286738
+environments:
+  name: Base Environment
+  meta:
+    id: env_6ecdeea3aecae89c612725e246831562f38609d0
+    created: 1764585286735
+    modified: 1764585286735
+    isPrivate: false
