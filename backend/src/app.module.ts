@@ -11,7 +11,7 @@ import { Files } from './files/files.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'db',
+      host: 'localhost', // db for docker, localhost for local connection (backend in local, db in docker)
       port: 3306,
       username: 'root',
       password: 'secret',
