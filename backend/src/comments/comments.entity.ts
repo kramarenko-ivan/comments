@@ -2,25 +2,29 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  Tree,
+  TreeChildren,
+  TreeParent,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
 @Entity('comments')
+@Tree('closure-table') // поддержка древовидной структуры
 export class Comments {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Users)
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => Users, (user) => user.comments, { nullable: false })
   user: Users;
 
-  @ManyToOne(() => Comments, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'parent_id' })
+  @TreeParent({ onDelete: 'CASCADE' })
   parent: Comments;
+
+  @TreeChildren()
+  children: Comments[];
 
   @Column('text')
   text: string;

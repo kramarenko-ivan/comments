@@ -6,6 +6,7 @@ import { Users } from './users/users.entity';
 import { UsersModule } from './users/users.module';
 import { Comments } from './comments/comments.entity';
 import { Files } from './files/files.entity';
+import {CommentsModule} from "./comments/comments.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { Files } from './files/files.entity';
     }),
     TypeOrmModule.forFeature([Users, Comments, Files]),
     UsersModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
