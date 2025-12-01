@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from './users.entity';
+import {CreateUserDto} from "./dto/create-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -18,9 +19,20 @@ export class UsersService {
     return this.usersRepo.findOne({ where: { id } });
   }
 
-  async create(data: Partial<Users>) {
-    const user = this.usersRepo.create(data);
-    return this.usersRepo.save(user);
+  async create(dto: CreateUserDto) {
+    const user = this.usersRepo.create(dto);
+
+    try {
+      return await this.usersRepo.save(user);
+    } catch (error) {
+      // Проверяем MySQL код ошибки дубликата
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException(
+          'Пользователь с таким username или email уже существует',
+        );
+      }
+      throw error; // пробрасываем остальные ошибки
+    }
   }
 
   async delete(id: number) {
