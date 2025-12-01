@@ -24,6 +24,6 @@ export class Users {
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
-  @OneToMany(() => Comments, (comment) => comment.user)
+  @OneToMany(() => Comments, (comment) => comment.user, { cascade: ['remove'] })
   comments: Comments[];
 }

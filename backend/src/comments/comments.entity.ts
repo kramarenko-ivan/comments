@@ -17,7 +17,7 @@ export class Comments {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Users, (user) => user.comments, { nullable: false })
+  @ManyToOne(() => Users, (user) => user.comments, { nullable: false, onDelete: 'CASCADE' })
   user: Users;
 
   @TreeParent({ onDelete: 'CASCADE' })
