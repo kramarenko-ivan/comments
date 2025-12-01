@@ -4,6 +4,7 @@ import { Repository, TreeRepository } from 'typeorm';
 import { Comments } from './comments.entity';
 import { Users } from '../users/users.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import {UpdateCommentDto} from "./dto/update-comment.dto";
 
 @Injectable()
 export class CommentsService {
@@ -45,6 +46,14 @@ export class CommentsService {
     if (!root) throw new NotFoundException('Comment not found');
 
     return this.commentsRepo.findDescendantsTree(root);
+  }
+
+  async update(id: number, dto: UpdateCommentDto) {
+    const comment = await this.commentsRepo.findOne({ where: { id } });
+    if (!comment) throw new NotFoundException('Comment not found');
+
+    Object.assign(comment, dto);
+    return this.commentsRepo.save(comment);
   }
 
   async delete(id: number) {
