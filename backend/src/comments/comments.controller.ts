@@ -1,7 +1,6 @@
-import {Controller, Post, Get, Delete, Body, Param, Put, ParseIntPipe, Patch} from '@nestjs/common';
+import {Controller, Post, Get, Delete, Body, Param, Patch} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import {UpdateUserDto} from "../users/dto/update-user.dto";
 import {UpdateCommentDto} from "./dto/update-comment.dto";
 
 @Controller('comments')
