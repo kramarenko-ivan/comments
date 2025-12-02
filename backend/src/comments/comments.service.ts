@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, TreeRepository } from 'typeorm';
-import { Comments } from './comments.entity';
-import { Users } from '../users/users.entity';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository, TreeRepository} from 'typeorm';
+import {Comments} from './comments.entity';
+import {Users} from '../users/users.entity';
+import {CreateCommentDto} from './dto/create-comment.dto';
 import {UpdateCommentDto} from "./dto/update-comment.dto";
 
 @Injectable()
@@ -61,5 +61,26 @@ export class CommentsService {
     if (!comment) throw new NotFoundException('Comment not found');
 
     return this.commentsRepo.remove(comment);
+  }
+
+  async getComments(
+    sortBy: 'username' | 'email' | 'comment_created',
+    order: 'ASC' | 'DESC',
+  ): Promise<Comments[]> {
+    // Получаем только корневые комментарии (parentId IS NULL)
+    return await this.commentsRepo
+      .createQueryBuilder('comment')
+      .leftJoinAndSelect('comment.user', 'user')
+      .leftJoinAndSelect('comment.children', 'children') // подгружаем детей
+      .where('comment.parentId IS NULL')
+      .orderBy(
+        sortBy === 'username'
+          ? 'user.username'
+          : sortBy === 'email'
+            ? 'user.email'
+            : 'comment.created_at',
+        order,
+      )
+      .getMany();
   }
 }

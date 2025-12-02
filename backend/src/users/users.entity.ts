@@ -18,6 +18,9 @@ export class Users {
   @Column({ length: 40, unique: true })
   email: string;
 
+  @Column({ select: false })
+  password: string;
+
   @Column({ length: 40, nullable: true })
   homepage: string;
 

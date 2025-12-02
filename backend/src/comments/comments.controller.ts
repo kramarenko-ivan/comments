@@ -1,4 +1,4 @@
-import {Controller, Post, Get, Delete, Body, Param, Patch} from '@nestjs/common';
+import {Controller, Post, Get, Delete, Body, Param, Patch, Query} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import {UpdateCommentDto} from "./dto/update-comment.dto";
@@ -30,10 +30,16 @@ export class CommentsController {
     return this.commentsService.update(id, dto);
   }
 
-
-
   @Delete(':id')
   delete(@Param('id') id: number) {
     return this.commentsService.delete(id);
+  }
+
+  @Get()
+  getComments(
+    @Query('sortBy') sortBy: 'username' | 'email' | 'comment_created' = 'comment_created',
+    @Query('order') order: 'ASC' | 'DESC' = 'ASC',
+  ) {
+    return this.commentsService.getComments(sortBy, order);
   }
 }
