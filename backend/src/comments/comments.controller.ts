@@ -17,22 +17,22 @@ export class CommentsController {
     return this.commentsService.findTree();
   }
 
-  @Get(':id/tree')
-  findOneTree(@Param('id') id: number) {
-    return this.commentsService.findOneTree(id);
+  @Get(':comment_id/tree')
+  findOneTree(@Param('comment_id') comment_id: number) {
+    return this.commentsService.findOneTree(comment_id);
   }
 
-  @Patch(':id')
+  @Patch(':comment_id')
   update(
-    @Param('id') id: number,
+    @Param('comment_id') comment_id: number,
     @Body() dto: UpdateCommentDto,
   ) {
-    return this.commentsService.update(id, dto);
+    return this.commentsService.update(comment_id, dto);
   }
 
-  @Delete(':id')
-  delete(@Param('id') id: number) {
-    return this.commentsService.delete(id);
+  @Delete(':comment_id')
+  delete(@Param('comment_id') comment_id: number) {
+    return this.commentsService.delete(comment_id);
   }
 
   @Get('sorted')

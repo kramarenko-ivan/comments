@@ -16,7 +16,7 @@ export class FilesService {
   ) {}
 
   async create(dto: CreateFileDto) {
-    const comment = await this.commentsRepo.findOne({ where: { id: dto.commentId } });
+    const comment = await this.commentsRepo.findOne({ where: { comment_id: dto.commentId } });
     if (!comment) throw new NotFoundException('Comment not found');
 
     const file = this.filesRepo.create({
@@ -44,7 +44,7 @@ export class FilesService {
     if (!file) throw new NotFoundException('File not found');
 
     if (dto.commentId) {
-      const comment = await this.commentsRepo.findOne({ where: { id: dto.commentId } });
+      const comment = await this.commentsRepo.findOne({ where: { comment_id: dto.commentId } });
       if (!comment) throw new NotFoundException('Comment not found');
       file.comment = comment;
     }

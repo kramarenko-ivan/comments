@@ -27,7 +27,7 @@ export class CommentsService {
 
     if (dto.parentId) {
       const parent = await this.commentsRepo.findOne({
-        where: { id: dto.parentId },
+        where: { comment_id: dto.parentId },
       });
       if (!parent) throw new NotFoundException('Parent comment not found');
 
@@ -41,23 +41,23 @@ export class CommentsService {
     return this.commentsRepo.findTrees();
   }
 
-  async findOneTree(id: number) {
-    const root = await this.commentsRepo.findOne({ where: { id } });
+  async findOneTree(comment_id: number) {
+    const root = await this.commentsRepo.findOne({ where: { comment_id } });
     if (!root) throw new NotFoundException('Comment not found');
 
     return this.commentsRepo.findDescendantsTree(root);
   }
 
-  async update(id: number, dto: UpdateCommentDto) {
-    const comment = await this.commentsRepo.findOne({ where: { id } });
+  async update(comment_id: number, dto: UpdateCommentDto) {
+    const comment = await this.commentsRepo.findOne({ where: { comment_id } });
     if (!comment) throw new NotFoundException('Comment not found');
 
     Object.assign(comment, dto);
     return this.commentsRepo.save(comment);
   }
 
-  async delete(id: number) {
-    const comment = await this.commentsRepo.findOne({ where: { id } });
+  async delete(comment_id: number) {
+    const comment = await this.commentsRepo.findOne({ where: { comment_id } });
     if (!comment) throw new NotFoundException('Comment not found');
 
     return this.commentsRepo.remove(comment);

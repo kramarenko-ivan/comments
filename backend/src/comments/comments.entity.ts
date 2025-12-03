@@ -16,7 +16,7 @@ import { Users } from '../users/users.entity';
 @Tree('closure-table') // поддержка древовидной структуры
 export class Comments {
   @PrimaryGeneratedColumn()
-  id: number;
+  comment_id: number;
 
   // Явно указываем колонку для связи с Users
   @ManyToOne(() => Users, (user) => user.comments, { nullable: false, onDelete: 'CASCADE' })
