@@ -37,9 +37,12 @@ export class CommentsController {
 
   @Get('sorted')
   getComments(
-    @Query('sortBy') sortBy: 'username' | 'email' | 'comment_created' = 'comment_created',
-    @Query('order') order: 'ASC' | 'DESC' = 'ASC',
+    @Query('sortBy') sortBy: 'username' | 'email' | 'comment_created',
+    @Query('order') order: 'ASC' | 'DESC',
+    @Query('page') page: string,
   ) {
-    return this.commentsService.getComments(sortBy, order);
+    const pageNumber = parseInt(page);
+    return this.commentsService.getComments(pageNumber, sortBy, order);
   }
+
 }

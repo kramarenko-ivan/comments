@@ -64,13 +64,14 @@ export class CommentsService {
   }
 
   async getComments(
+    page: number = 1,
     sortBy: 'username' | 'email' | 'comment_created' = 'comment_created',
-    order: 'ASC' | 'DESC' = 'DESC', // по умолчанию LIFO
+    order: 'ASC' | 'DESC' = 'DESC',
   ) {
-    // 1. Получаем все корневые комментарии с пользователями
+    const perPage = 25;
+
     const roots = await this.commentsRepo.findRoots({ relations: ['user'] });
 
-    // 2. Сортируем корневые комментарии по запросу пользователя
     const sortedRoots = roots.sort((a, b) => {
       let valA: any, valB: any;
 
@@ -79,12 +80,10 @@ export class CommentsService {
           valA = a.user?.username ?? '';
           valB = b.user?.username ?? '';
           break;
-
         case 'email':
           valA = a.user?.email ?? '';
           valB = b.user?.email ?? '';
           break;
-
         case 'comment_created':
         default:
           valA = a.created_at;
@@ -97,12 +96,13 @@ export class CommentsService {
       return 0;
     });
 
-    // 3. Для каждого корня подгружаем дерево с детьми
-    return await Promise.all(
-      sortedRoots.map(async root => {
+    const start = (page - 1) * perPage;
+    const paginatedRoots = sortedRoots.slice(start, start + perPage);
+
+    const result = await Promise.all(
+      paginatedRoots.map(async root => {
         const tree = await this.commentsRepo.findDescendantsTree(root);
 
-        // 4. Рекурсивно сортируем детей по created_at DESC (LIFO)
         const sortChildrenLIFO = (nodes: Comments[]) => {
           nodes.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
           nodes.forEach(n => n.children && sortChildrenLIFO(n.children));
@@ -112,7 +112,13 @@ export class CommentsService {
         return tree;
       }),
     );
-  }
 
+    return {
+      page,
+      perPage,
+      total: roots.length,
+      data: result,
+    };
+  }
 
 }
