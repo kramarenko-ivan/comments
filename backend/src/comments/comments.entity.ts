@@ -8,6 +8,7 @@ import {
   Tree,
   TreeChildren,
   TreeParent,
+  JoinColumn,
 } from 'typeorm';
 import { Users } from '../users/users.entity';
 
@@ -17,7 +18,9 @@ export class Comments {
   @PrimaryGeneratedColumn()
   id: number;
 
+  // Явно указываем колонку для связи с Users
   @ManyToOne(() => Users, (user) => user.comments, { nullable: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' }) // здесь указываем новое имя колонки
   user: Users;
 
   @TreeParent({ onDelete: 'CASCADE' })

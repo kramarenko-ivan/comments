@@ -17,7 +17,7 @@ export class CommentsService {
   ) {}
 
   async create(dto: CreateCommentDto) {
-    const user = await this.usersRepo.findOne({ where: { id: dto.userId } });
+    const user = await this.usersRepo.findOne({ where: { user_id: dto.userId } });
     if (!user) throw new NotFoundException('User not found');
 
     const comment = this.commentsRepo.create({

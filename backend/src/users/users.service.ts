@@ -16,8 +16,8 @@ export class UsersService {
     return this.usersRepo.find();
   }
 
-  findOne(id: number) {
-    return this.usersRepo.findOne({ where: { id } });
+  findOne(user_id: number) {
+    return this.usersRepo.findOne({ where: { user_id } });
   }
 
   async create(dto: CreateUserDto) {
@@ -36,18 +36,18 @@ export class UsersService {
     }
   }
 
-  async update(id: number, dto: UpdateUserDto) {
-    const user = await this.usersRepo.findOneBy({ id });
+  async update(user_id: number, dto: UpdateUserDto) {
+    const user = await this.usersRepo.findOneBy({ user_id });
     if (!user) {
-      throw new NotFoundException(`User with id ${id} not found`);
+      throw new NotFoundException(`User with id ${user_id} not found`);
     }
     Object.assign(user, dto);
     return this.usersRepo.save(user);
   }
 
 
-  async delete(id: number) {
-    const res = await this.usersRepo.delete(id);
+  async delete(user_id: number) {
+    const res = await this.usersRepo.delete(user_id);
     if (res.affected === 0) {
       throw new NotFoundException('User not found');
     }

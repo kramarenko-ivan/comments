@@ -12,9 +12,9 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  getOne(@Param('id') id: number) {
-    return this.usersService.findOne(id);
+  @Get(':user_id')
+  getOne(@Param('user_id') user_id: number) {
+    return this.usersService.findOne(user_id);
   }
 
   @Post()
@@ -26,14 +26,14 @@ export class UsersController {
     };
   }
 
-  @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
-    return this.usersService.update(id, dto);
+  @Put(':user_id')
+  update(@Param('user_id', ParseIntPipe) user_id: number, @Body() dto: UpdateUserDto) {
+    return this.usersService.update(user_id, dto);
   }
 
 
-  @Delete(':id')
-  delete(@Param('id') id: number) {
-    return this.usersService.delete(id);
+  @Delete(':user_id')
+  delete(@Param('user_id') user_id: number) {
+    return this.usersService.delete(user_id);
   }
 }
