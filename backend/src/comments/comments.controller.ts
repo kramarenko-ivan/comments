@@ -12,7 +12,7 @@ export class CommentsController {
     return this.commentsService.create(dto);
   }
 
-  @Get()
+  @Get('tree')
   findAllTree() {
     return this.commentsService.findTree();
   }
@@ -35,7 +35,7 @@ export class CommentsController {
     return this.commentsService.delete(id);
   }
 
-  @Get()
+  @Get('sorted')
   getComments(
     @Query('sortBy') sortBy: 'username' | 'email' | 'comment_created' = 'comment_created',
     @Query('order') order: 'ASC' | 'DESC' = 'ASC',

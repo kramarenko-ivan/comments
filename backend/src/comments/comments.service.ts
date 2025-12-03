@@ -64,23 +64,55 @@ export class CommentsService {
   }
 
   async getComments(
-    sortBy: 'username' | 'email' | 'comment_created',
-    order: 'ASC' | 'DESC',
-  ): Promise<Comments[]> {
-    // Получаем только корневые комментарии (parentId IS NULL)
-    return await this.commentsRepo
-      .createQueryBuilder('comment')
-      .leftJoinAndSelect('comment.user', 'user')
-      .leftJoinAndSelect('comment.children', 'children') // подгружаем детей
-      .where('comment.parentId IS NULL')
-      .orderBy(
-        sortBy === 'username'
-          ? 'user.username'
-          : sortBy === 'email'
-            ? 'user.email'
-            : 'comment.created_at',
-        order,
-      )
-      .getMany();
+    sortBy: 'username' | 'email' | 'comment_created' = 'comment_created',
+    order: 'ASC' | 'DESC' = 'DESC', // по умолчанию LIFO
+  ) {
+    // 1. Получаем все корневые комментарии с пользователями
+    const roots = await this.commentsRepo.findRoots({ relations: ['user'] });
+
+    // 2. Сортируем корневые комментарии по запросу пользователя
+    const sortedRoots = roots.sort((a, b) => {
+      let valA: any, valB: any;
+
+      switch (sortBy) {
+        case 'username':
+          valA = a.user?.username ?? '';
+          valB = b.user?.username ?? '';
+          break;
+
+        case 'email':
+          valA = a.user?.email ?? '';
+          valB = b.user?.email ?? '';
+          break;
+
+        case 'comment_created':
+        default:
+          valA = a.created_at;
+          valB = b.created_at;
+          break;
+      }
+
+      if (valA > valB) return order === 'ASC' ? 1 : -1;
+      if (valA < valB) return order === 'ASC' ? -1 : 1;
+      return 0;
+    });
+
+    // 3. Для каждого корня подгружаем дерево с детьми
+    return await Promise.all(
+      sortedRoots.map(async root => {
+        const tree = await this.commentsRepo.findDescendantsTree(root);
+
+        // 4. Рекурсивно сортируем детей по created_at DESC (LIFO)
+        const sortChildrenLIFO = (nodes: Comments[]) => {
+          nodes.sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+          nodes.forEach(n => n.children && sortChildrenLIFO(n.children));
+        };
+
+        if (tree.children) sortChildrenLIFO(tree.children);
+        return tree;
+      }),
+    );
   }
+
+
 }
