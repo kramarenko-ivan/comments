@@ -15,7 +15,7 @@ import { Users } from '../users/users.entity';
 @Entity('comments')
 @Tree('closure-table') // поддержка древовидной структуры
 export class Comments {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'comment_id' })
   comment_id: number;
 
   // Явно указываем колонку для связи с Users
@@ -24,6 +24,7 @@ export class Comments {
   user: Users;
 
   @TreeParent({ onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'parent_id' })
   parent: Comments;
 
   @TreeChildren()

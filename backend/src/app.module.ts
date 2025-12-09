@@ -19,7 +19,8 @@ import {FilesModule} from "./files/files.module";
       password: 'secret',
       database: 'comments_db',
       entities: [Users, Comments, Files],
-      synchronize: true, // ⚠️ never turn at prod
+      synchronize: false, // ⚠️ never turn at prod
+      migrationsRun: true
     }),
     TypeOrmModule.forFeature([Users, Comments, Files]),
     UsersModule,
