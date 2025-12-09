@@ -17,18 +17,18 @@ export class FilesController {
     return this.filesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.filesService.findOne(id);
+  @Get(':file_id')
+  findOne(@Param('file_id', ParseIntPipe) file_id: number) {
+    return this.filesService.findOne(file_id);
   }
 
-  @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateFileDto) {
-    return this.filesService.update(id, dto);
+  @Put(':file_id')
+  update(@Param('file_id', ParseIntPipe) file_id: number, @Body() dto: UpdateFileDto) {
+    return this.filesService.update(file_id, dto);
   }
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.filesService.remove(id);
+  @Delete(':file_id')
+  remove(@Param('file_id', ParseIntPipe) file_id: number) {
+    return this.filesService.remove(file_id);
   }
 }

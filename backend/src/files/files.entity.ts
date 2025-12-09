@@ -15,8 +15,8 @@ export enum FileType {
 
 @Entity('files')
 export class Files {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'file_id' })
+  file_id: number;
 
   @ManyToOne(() => Comments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'comment_id' })

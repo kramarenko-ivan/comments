@@ -33,14 +33,14 @@ export class FilesService {
     return this.filesRepo.find({ relations: ['comment'] });
   }
 
-  async findOne(id: number) {
-    const file = await this.filesRepo.findOne({ where: { id }, relations: ['comment'] });
+  async findOne(file_id: number) {
+    const file = await this.filesRepo.findOne({ where: { file_id }, relations: ['comment'] });
     if (!file) throw new NotFoundException('File not found');
     return file;
   }
 
-  async update(id: number, dto: UpdateFileDto) {
-    const file = await this.filesRepo.findOne({ where: { id }, relations: ['comment'] });
+  async update(file_id: number, dto: UpdateFileDto) {
+    const file = await this.filesRepo.findOne({ where: { file_id }, relations: ['comment'] });
     if (!file) throw new NotFoundException('File not found');
 
     if (dto.commentId) {
@@ -53,8 +53,8 @@ export class FilesService {
     return this.filesRepo.save(file);
   }
 
-  async remove(id: number) {
-    const file = await this.filesRepo.findOne({ where: { id } });
+  async remove(file_id: number) {
+    const file = await this.filesRepo.findOne({ where: { file_id } });
     if (!file) throw new NotFoundException('File not found');
     return this.filesRepo.remove(file);
   }
